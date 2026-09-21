@@ -504,50 +504,77 @@
   resize();
   requestAnimationFrame(draw);
 
-  /* ---------- sonido ambiental (Web Audio, sin archivos externos) ---------- */
-  var audioCtx=null,audioNodes=null,soundOn=false;
+  /* ---------- audio (Web Audio, sin archivos externos) ---------- */
+  var sharedCtx=null,ambientNodes=null,soundOn=false;
   var soundBtn=document.getElementById('soundBtn');
-  function startAmbient(){
+  function getCtx(){
+    if(!sharedCtx){
+      sharedCtx=new (window.AudioContext||window.webkitAudioContext)();
+    }
+    if(sharedCtx.state==='suspended'){
+      sharedCtx.resume();
+    }
+    return sharedCtx;
+  }
+  function playChime(){
     try{
-      audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-      var master=audioCtx.createGain();
-      master.gain.value=0;
-      master.connect(audioCtx.destination);
-      master.gain.linearRampToValueAtTime(.045,audioCtx.currentTime+2);
-      var freqs=[196,246.94,293.66];
-      var oscs=freqs.map(function(f){
-        var o=audioCtx.createOscillator();
+      var ctx=getCtx();
+      var t=ctx.currentTime;
+      [880,1318.51].forEach(function(f,i){
+        var o=ctx.createOscillator();
         o.type='sine';
         o.frequency.value=f;
-        var g=audioCtx.createGain();
+        var g=ctx.createGain();
+        var start=t+i*0.06;
+        g.gain.setValueAtTime(0,start);
+        g.gain.linearRampToValueAtTime(.09,start+.02);
+        g.gain.exponentialRampToValueAtTime(.0001,start+.65);
+        o.connect(g);g.connect(ctx.destination);
+        o.start(start);
+        o.stop(start+.7);
+      });
+    }catch(e){}
+  }
+  function startAmbient(){
+    try{
+      var ctx=getCtx();
+      var master=ctx.createGain();
+      master.gain.value=0;
+      master.connect(ctx.destination);
+      master.gain.linearRampToValueAtTime(.045,ctx.currentTime+2);
+      var freqs=[196,246.94,293.66];
+      var oscs=freqs.map(function(f){
+        var o=ctx.createOscillator();
+        o.type='sine';
+        o.frequency.value=f;
+        var g=ctx.createGain();
         g.gain.value=1/freqs.length;
         o.connect(g);g.connect(master);
         o.start();
         return o;
       });
-      var lfo=audioCtx.createOscillator();
+      var lfo=ctx.createOscillator();
       lfo.frequency.value=.07;
-      var lfoGain=audioCtx.createGain();
+      var lfoGain=ctx.createGain();
       lfoGain.gain.value=.025;
       lfo.connect(lfoGain);
       lfoGain.connect(master.gain);
       lfo.start();
-      audioNodes={master:master,oscs:oscs,lfo:lfo};
-    }catch(e){audioNodes=null;}
+      ambientNodes={master:master,oscs:oscs,lfo:lfo};
+    }catch(e){ambientNodes=null;}
   }
   function stopAmbient(){
-    if(!audioNodes||!audioCtx)return;
-    var now=audioCtx.currentTime;
-    audioNodes.master.gain.linearRampToValueAtTime(0,now+.8);
-    var ctxToClose=audioCtx,nodesToStop=audioNodes;
+    if(!ambientNodes||!sharedCtx)return;
+    var now=sharedCtx.currentTime;
+    ambientNodes.master.gain.linearRampToValueAtTime(0,now+.8);
+    var nodesToStop=ambientNodes;
     setTimeout(function(){
       try{
         nodesToStop.oscs.forEach(function(o){o.stop();});
         nodesToStop.lfo.stop();
-        ctxToClose.close();
       }catch(e){}
     },900);
-    audioCtx=null;audioNodes=null;
+    ambientNodes=null;
   }
   soundBtn.addEventListener('click',function(){
     soundOn=!soundOn;
@@ -731,6 +758,7 @@
   var revealTimer=null;
 
   function openLetter(i){
+    playChime();
     var note=notes[i];
     card.className='card '+entrances[i%entrances.length];
     noEl.textContent='Carta N.º '+pad2(i+1);
