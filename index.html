@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#04030c">
+<meta property="og:title" content="Para Sinthya 🌻">
+<meta property="og:description" content="Una galaxia de flores amarillas, solo para ti.">
+<style>html,body{margin:0}[hidden]{display:none!important}</style>
+<title>Para Sinthya 🌻</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Karla:wght@400;500;600&display=swap">
+
+<style>
+  :root{
+    --night:#04030c;
+    --deep:#0d0820;
+    --gold:#f6bb2a;
+    --gold-soft:#ffd873;
+    --gold-deep:#b3760d;
+    --cream:#fff5e2;
+    --paper:#fdf3dd;
+    --ink:#3f2b18;
+    --rose:#e0709a;
+    --font-display:"Cormorant Garamond", Georgia, serif;
+    --font-hand:"Caveat", "Segoe Script", cursive;
+    --font-ui:"Karla", system-ui, -apple-system, sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;background:var(--night);color:var(--cream);
+    font-family:var(--font-ui);overflow:hidden;
+    -webkit-tap-highlight-color:transparent;touch-action:none;
+  }
+
+  /* ---------- fondo ---------- */
+  #sky{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:1;}
+  .nebula{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(50% 32% at 50% 50%, rgba(246,187,42,.20) 0%, rgba(246,187,42,0) 72%),
+      radial-gradient(88% 64% at 12% 10%, rgba(92,44,150,.46) 0%, rgba(92,44,150,0) 62%),
+      radial-gradient(78% 60% at 90% 88%, rgba(158,38,104,.34) 0%, rgba(158,38,104,0) 60%),
+      radial-gradient(70% 50% at 84% 16%, rgba(28,96,140,.30) 0%, rgba(28,96,140,0) 64%),
+      linear-gradient(175deg, #05040f 0%, var(--deep) 50%, #04030e 100%);
+    animation:tinte 96s ease-in-out infinite;
+  }
+  @keyframes tinte{
+    0%,100%{filter:hue-rotate(0deg) saturate(1);}
+    33%{filter:hue-rotate(-13deg) saturate(1.12);}
+    66%{filter:hue-rotate(12deg) saturate(.94);}
+  }
+  .vignette{
+    position:fixed;inset:0;z-index:2;pointer-events:none;
+    background:radial-gradient(125% 92% at 50% 50%, rgba(0,0,0,0) 38%, rgba(0,0,0,.74) 100%);
+  }
+
+  /* ---------- órbita 3D ---------- */
+  .cosmos{position:fixed;inset:0;z-index:3;perspective:1000px;perspective-origin:50% 50%;cursor:grab;}
+  .cosmos.grabbing{cursor:grabbing;}
+  .orbit{position:absolute;inset:0;transform-style:preserve-3d;}
+
+  .bloom{
+    position:absolute;left:50%;top:50%;
+    width:var(--s);height:var(--s);
+    margin-left:calc(var(--s) / -2);margin-top:calc(var(--s) / -2);
+    background:none;border:0;padding:0;color:inherit;cursor:pointer;will-change:transform;
+  }
+  .bloom svg{
+    width:100%;height:100%;display:block;pointer-events:none;
+    filter:drop-shadow(0 0 12px rgba(246,187,42,.55)) hue-rotate(var(--tone,0deg));
+  }
+  .bloom:focus-visible{outline:2px dashed var(--gold-soft);outline-offset:6px;border-radius:50%;}
+  .bloom .halo{
+    position:absolute;inset:-26%;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle, rgba(246,187,42,.34) 0%, rgba(246,187,42,0) 65%);
+    animation:pulse 3.6s ease-in-out infinite;
+  }
+  .bloom.read .halo{display:none;}
+  .bloom.read svg{opacity:.66;}
+  .bloom .tick{
+    position:absolute;right:-4%;bottom:-4%;width:32%;height:32%;border-radius:50%;
+    display:grid;place-items:center;background:var(--cream);color:var(--gold-deep);
+    font-size:.6rem;line-height:1;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.6);
+    transform:scale(0);transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+  }
+  .bloom.read .tick{transform:scale(1);}
+  @keyframes pulse{0%,100%{opacity:.3;transform:scale(.88);}50%{opacity:.8;transform:scale(1.14);}}
+
+  /* ---------- encabezado y pie ---------- */
+  .crown{
+    position:fixed;left:0;right:0;top:0;z-index:5;
+    padding:calc(env(safe-area-inset-top, 0px) + 18px) 22px 0;
+    text-align:center;pointer-events:none;
+  }
+  .crown .eyebrow{font-size:.62rem;font-weight:600;letter-spacing:.34em;text-transform:uppercase;color:rgba(255,245,226,.45);margin:0 0 5px;}
+  .crown h1{
+    font-family:var(--font-display);font-style:italic;font-weight:600;
+    font-size:clamp(1.7rem,7.4vw,2.7rem);line-height:1.05;margin:0;
+    text-wrap:balance;
+    background:linear-gradient(175deg,#fff6d8 0%,#ffd873 38%,#f0a81e 72%,#ffe9a8 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 18px rgba(246,187,42,.55));
+  }
+
+  .foot{
+    position:fixed;left:0;right:0;bottom:0;z-index:5;
+    padding:0 16px calc(env(safe-area-inset-bottom, 0px) + 16px);
+    display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;
+  }
+  .foot::before{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:190%;z-index:-1;
+    background:linear-gradient(180deg, rgba(4,3,12,0) 0%, rgba(4,3,12,.55) 46%, rgba(4,3,12,.88) 100%);
+  }
+  .hint{
+    font-family:var(--font-hand);font-size:1.18rem;line-height:1.2;
+    color:rgba(255,245,226,.78);margin:0;text-align:center;transition:opacity .7s ease;
+  }
+  .hint.gone{opacity:0;}
+  .track{display:flex;gap:6px;}
+  .track i{width:6px;height:6px;border-radius:50%;background:rgba(255,245,226,.2);transition:background .35s, box-shadow .35s;}
+  .track i.on{background:var(--gold);box-shadow:0 0 9px rgba(246,187,42,.95);}
+  .count{font-size:.62rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,245,226,.4);margin:0;}
+
+  .sound{
+    position:fixed;z-index:6;bottom:calc(env(safe-area-inset-bottom, 0px) + 14px);right:14px;
+    width:38px;height:38px;border-radius:50%;
+    border:1px solid rgba(255,245,226,.18);background:rgba(8,6,20,.55);
+    color:rgba(255,245,226,.7);font-size:.9rem;line-height:1;cursor:pointer;display:grid;place-items:center;
+  }
+  .sound:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px;}
+
+  /* ---------- capas ---------- */
+  .veil{
+    position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;
+    padding:calc(env(safe-area-inset-top, 0px) + 20px) 18px calc(env(safe-area-inset-bottom, 0px) + 20px);
+    background:rgba(4,3,10,.72);backdrop-filter:blur(6px);
+    opacity:0;pointer-events:none;transition:opacity .4s ease;
+  }
+  .veil.show{opacity:1;pointer-events:auto;}
+
+  /* ---------- portada ---------- */
+  #intro{
+    background:linear-gradient(180deg, rgba(3,3,10,0) 0%, rgba(3,3,10,0) 48%, rgba(3,3,10,.72) 100%);
+    backdrop-filter:none;-webkit-backdrop-filter:none;
+    opacity:1;pointer-events:auto;z-index:30;
+    align-items:flex-end;
+    padding-bottom:calc(env(safe-area-inset-bottom, 0px) + 28px);
+  }
+  #intro.hide{opacity:0;pointer-events:none;}
+
+  /* ---------- prólogo por capítulos ---------- */
+  .prologue{width:100%;max-width:26rem;display:flex;flex-direction:column;gap:22px;}
+  .pl-copy{display:flex;flex-direction:column;gap:12px;transition:opacity .6s ease, transform .6s cubic-bezier(.2,.8,.2,1);}
+  .pl-copy.swap{opacity:0;transform:translateY(10px);}
+  .pl-title{
+    font-family:var(--font-display);font-style:italic;font-weight:600;
+    font-size:clamp(2.1rem,10vw,3.1rem);line-height:1.02;margin:0;
+    background:linear-gradient(175deg,#fff6d8 0%,#ffd873 44%,#f0a81e 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 20px rgba(246,187,42,.4));
+    text-wrap:balance;overflow-wrap:anywhere;
+  }
+  .pl-text{
+    font-family:var(--font-display);font-style:italic;font-weight:500;
+    font-size:clamp(1.18rem,5vw,1.42rem);line-height:1.42;margin:0;
+    color:rgba(255,245,226,.86);max-width:22rem;text-wrap:pretty;
+  }
+  .pl-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .chap{
+    display:flex;align-items:center;gap:12px;margin:0;
+    font-family:var(--font-ui);font-size:.6rem;font-weight:600;
+    letter-spacing:.3em;text-transform:uppercase;color:rgba(255,245,226,.5);
+  }
+  .chap b{font-weight:600;color:rgba(255,245,226,.8);font-variant-numeric:tabular-nums;}
+  .chap i{display:block;width:56px;height:1px;background:linear-gradient(90deg,rgba(255,245,226,.55),rgba(255,245,226,.08));}
+  .next{
+    font-family:var(--font-ui);font-size:.8rem;font-weight:600;letter-spacing:.06em;
+    color:var(--cream);background:rgba(6,5,16,.72);
+    border:1px solid rgba(255,245,226,.24);border-radius:999px;
+    padding:14px 24px;cursor:pointer;display:inline-flex;align-items:center;gap:10px;
+    box-shadow:0 0 0 0 rgba(246,187,42,.0);
+    transition:background .25s ease, border-color .25s ease, box-shadow .4s ease;
+    animation:nudge 2.8s ease-in-out 1.2s infinite;
+  }
+  .next span{font-size:.9rem;line-height:1;transition:transform .25s ease;}
+  .next:hover{background:rgba(24,18,44,.85);border-color:rgba(255,216,115,.5);}
+  .next:hover span{transform:translate(2px,-2px);}
+  .next:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px;}
+  .next.gold{color:#2a1c06;background:linear-gradient(160deg,var(--gold-soft),var(--gold));border-color:transparent;}
+  @keyframes nudge{0%,100%{box-shadow:0 0 0 0 rgba(255,216,115,0);}50%{box-shadow:0 0 0 7px rgba(255,216,115,.08);}}
+
+  /* el universo se despierta */
+  .nebula{opacity:0;transition:opacity 3s ease;}
+  .awakened .nebula{opacity:1;}
+  .grain{
+    position:fixed;inset:-60px;z-index:4;pointer-events:none;opacity:.075;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    animation:grain .9s steps(4) infinite;
+  }
+  @keyframes grain{
+    0%{transform:translate(0,0);}25%{transform:translate(-22px,14px);}
+    50%{transform:translate(16px,-20px);}75%{transform:translate(-10px,-12px);}100%{transform:translate(0,0);}
+  }
+  .flash{
+    position:fixed;inset:0;z-index:25;pointer-events:none;opacity:0;
+    background:radial-gradient(60% 45% at 50% 46%, rgba(255,246,220,.95) 0%, rgba(255,210,120,.45) 38%, rgba(255,210,120,0) 72%);
+  }
+  .flash.go{animation:flash 1s ease-out;}
+  @keyframes flash{0%{opacity:0;}14%{opacity:.85;}100%{opacity:0;}}
+
+  body:not(.entered) .crown,
+  body:not(.entered) .foot{opacity:0;}
+  .crown,.foot{transition:opacity 1.4s ease;}
+  body:not(.bloomed) .cosmos{opacity:0;pointer-events:none;}
+  .cosmos{transition:opacity 2.4s ease;}
+  .gate{text-align:center;max-width:21rem;display:flex;flex-direction:column;align-items:center;gap:18px;}
+  .gate .date{font-size:.62rem;font-weight:600;letter-spacing:.34em;text-transform:uppercase;color:var(--gold-soft);margin:0;}
+  .gate h2{
+    font-family:var(--font-display);font-style:italic;font-weight:600;
+    font-size:clamp(2.2rem,11vw,3.4rem);line-height:1;margin:0;
+    text-shadow:0 0 34px rgba(246,187,42,.5);overflow-wrap:anywhere;
+  }
+  .gate p{font-family:var(--font-hand);font-size:1.32rem;line-height:1.35;color:rgba(255,245,226,.85);margin:0;}
+  .gate .orb{width:96px;height:96px;filter:drop-shadow(0 0 24px rgba(246,187,42,.65));animation:bob 5s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(-6px) rotate(-4deg);}50%{transform:translateY(6px) rotate(4deg);}}
+  .enter{
+    font-size:.76rem;font-weight:600;letter-spacing:.24em;text-transform:uppercase;
+    color:#2a1c06;background:linear-gradient(160deg,var(--gold-soft),var(--gold));
+    border:0;border-radius:999px;padding:15px 32px;cursor:pointer;box-shadow:0 10px 34px rgba(246,187,42,.32);
+  }
+  .enter:focus-visible{outline:2px solid var(--cream);outline-offset:4px;}
+
+  /* ---------- carta ---------- */
+  .card{
+    position:relative;width:100%;max-width:29rem;max-height:100%;
+    display:flex;flex-direction:column;
+    background:radial-gradient(120% 90% at 22% 0%, #fffaf0 0%, var(--paper) 52%, #f1e0bf 100%);
+    color:var(--ink);border-radius:6px;padding:36px 22px 24px;
+    border:2px solid transparent;
+    background-clip:padding-box;
+    box-shadow:
+      0 0 0 2px rgba(214,158,46,.85),
+      0 0 0 5px rgba(255,216,115,.22),
+      0 0 34px rgba(246,187,42,.28),
+      0 28px 72px rgba(0,0,0,.62);
+    transform-origin:center;
+  }
+  .card .frame{
+    position:absolute;inset:8px;border:1px solid rgba(190,138,38,.4);
+    border-radius:3px;pointer-events:none;
+  }
+  .seal{
+    position:absolute;top:-22px;left:50%;margin-left:-26px;width:52px;height:52px;border-radius:50%;
+    background:radial-gradient(circle at 34% 28%, #f3899f, #b02f59 72%);
+    display:grid;place-items:center;color:#ffe9f0;font-size:1.05rem;
+    box-shadow:0 6px 18px rgba(0,0,0,.45), inset 0 -3px 8px rgba(0,0,0,.3);
+    animation:seal .7s cubic-bezier(.34,1.5,.5,1) both;
+  }
+  @keyframes seal{0%{transform:scale(0) rotate(-40deg);}100%{transform:scale(1) rotate(0);}}
+  .card .no{font-size:.58rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:rgba(63,43,24,.42);margin:6px 0 2px;text-align:center;}
+  .card h3{
+    font-family:var(--font-display);font-style:italic;font-weight:600;
+    font-size:clamp(1.55rem,6vw,2rem);line-height:1.1;margin:0 0 12px;text-align:center;color:#4a3216;text-wrap:balance;
+  }
+  .card .rule{width:54px;height:1px;background:rgba(122,86,34,.35);margin:0 auto 16px;flex:none;}
+  .card .body{
+    overflow-y:auto;-webkit-overflow-scrolling:touch;
+    font-family:var(--font-hand);font-size:clamp(1.26rem,4.5vw,1.46rem);
+    line-height:1.5;margin:0 0 18px;padding:0 2px;min-height:4.5em;
+  }
+  .card .body p{margin:0 0 .7em;}
+  .card .body p:last-child{margin:0;}
+  .card .body .w{opacity:0;transition:opacity .28s ease;}
+  .card .body .w.on{opacity:1;}
+  .card .sign{font-family:var(--font-hand);font-size:1.26rem;color:#8a6127;text-align:right;margin:0 2px 16px;}
+  .close{
+    align-self:center;font-size:.7rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+    color:#5b3f1c;background:none;border:1px solid rgba(91,63,28,.3);border-radius:999px;padding:11px 24px;cursor:pointer;
+  }
+  .close:hover{background:rgba(91,63,28,.07);}
+  .close:focus-visible{outline:2px solid var(--gold-deep);outline-offset:3px;}
+
+  .veil.show .card.e0{animation:eFade .55s cubic-bezier(.2,.8,.2,1) both;}
+  .veil.show .card.e1{animation:eFlip .75s cubic-bezier(.2,.85,.25,1) both;}
+  .veil.show .card.e2{animation:eUnfold .75s cubic-bezier(.2,.85,.25,1) both;transform-origin:top center;}
+  .veil.show .card.e3{animation:eRise .6s cubic-bezier(.16,1,.3,1) both;}
+  .veil.show .card.e4{animation:eSpin .8s cubic-bezier(.2,.9,.25,1) both;}
+  .veil.show .card.e5{animation:eSway .7s cubic-bezier(.2,.9,.25,1) both;}
+  @keyframes eFade{from{opacity:0;transform:scale(.88);}to{opacity:1;transform:none;}}
+  @keyframes eFlip{from{opacity:0;transform:perspective(1100px) rotateY(82deg);}to{opacity:1;transform:perspective(1100px) rotateY(0);}}
+  @keyframes eUnfold{from{opacity:0;transform:perspective(1100px) rotateX(-86deg);}to{opacity:1;transform:perspective(1100px) rotateX(0);}}
+  @keyframes eRise{from{opacity:0;transform:translateY(64px) scale(.94);}to{opacity:1;transform:none;}}
+  @keyframes eSpin{from{opacity:0;transform:scale(.4) rotate(-14deg);}to{opacity:1;transform:scale(1) rotate(0);}}
+  @keyframes eSway{from{opacity:0;transform:translateX(-56px) rotate(-5deg);}to{opacity:1;transform:none;}}
+
+  /* ---------- final ---------- */
+  #finale .card{background:radial-gradient(120% 90% at 50% 0%, #fffdf6 0%, var(--paper) 46%, #eedbb4 100%);padding-top:34px;}
+  #finale .bouquet{display:flex;justify-content:center;margin:0 0 2px;}
+  #finale .bouquet svg{width:42px;height:42px;margin:0 -5px;}
+  #finale .bouquet svg:nth-child(2){width:52px;height:52px;}
+  .again{background:none;border:0;cursor:pointer;margin-top:10px;align-self:center;
+    font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(63,43,24,.45);}
+
+  /* ---------- mensaje del corazón ---------- */
+  .lovenote{
+    position:fixed;left:0;right:0;z-index:6;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 96px);
+    padding:0 20px;text-align:center;pointer-events:none;
+    opacity:0;transform:translateY(14px);
+    transition:opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1);
+  }
+  .lovenote.show{opacity:1;transform:none;}
+  .lovenote p{
+    font-family:var(--font-hand);font-weight:700;
+    font-size:clamp(1.7rem,7.4vw,2.5rem);line-height:1.12;margin:0 auto 10px;max-width:22rem;
+    background:linear-gradient(175deg,#fff7de 0%,#ffd873 45%,#ff9fbe 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 16px rgba(255,150,180,.45));
+    text-wrap:balance;transition:opacity .35s ease;
+  }
+  .lovenote p.swap{opacity:0;}
+  .lovenote .back{
+    pointer-events:auto;
+    font-family:var(--font-ui);font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    color:rgba(255,245,226,.7);background:rgba(8,6,20,.5);
+    border:1px solid rgba(255,245,226,.22);border-radius:999px;padding:10px 18px;cursor:pointer;
+  }
+  .lovenote .back:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px;}
+
+  @media (prefers-reduced-motion: reduce){
+    .grain,.next{animation:none;}
+    .flash.go{animation:none;}
+    .bloom .halo,.gate .orb,.nebula{animation:none;}
+    .veil.show .card{animation:eFade .3s ease both;}
+  }
+</style>
+</head>
+<body>
+
+<div class="nebula"></div>
+<canvas id="sky"></canvas>
+<div class="vignette"></div>
+<div class="grain"></div>
+<div class="flash" id="flash"></div>
+
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <defs>
+    <radialGradient id="gPetal" cx="50%" cy="16%" r="88%">
+      <stop offset="0%" stop-color="#fff3c4"/><stop offset="42%" stop-color="#f9c53a"/><stop offset="100%" stop-color="#d1860a"/>
+    </radialGradient>
+    <radialGradient id="gSeed" cx="36%" cy="30%" r="76%">
+      <stop offset="0%" stop-color="#8d5620"/><stop offset="62%" stop-color="#57310f"/><stop offset="100%" stop-color="#2e1705"/>
+    </radialGradient>
+    <g id="flower">
+      <g fill="url(#gPetal)">
+        <ellipse cx="50" cy="24" rx="7.4" ry="19"/>
+        <ellipse cx="50" cy="24" rx="7.4" ry="19" transform="rotate(30 50 50)"/>
+        <ellipse cx="50" cy="24" rx="7.4" ry="19" transform="rotate(60 50 50)"/>
+        <ellipse cx="50" cy="24" rx="7.4" ry="19" transform="rotate(90 50 50)"/>
+        <ellipse cx="50" cy="24" rx="7.4" ry="19" transform="rotate(120 50 50)"/>
+        <ellipse cx="50" cy="24" rx="7.4" ry="19" transform="rotate(150 50 50)"/>
+        <ellipse cx="50" cy="24" rx="7.4" ry="19" transform="rotate(180 50 50)"/>
+        <ellipse cx="50" cy="24" rx="7.4" ry="19" transform="rotate(210 50 50)"/>
+        <ellipse cx="50" cy="24" rx="7.4" ry="19" transform="rotate(240 50 50)"/>
+        <ellipse cx="50" cy="24" rx="7.4" ry="19" transform="rotate(270 50 50)"/>
+        <ellipse cx="50" cy="24" rx="7.4" ry="19" transform="rotate(300 50 50)"/>
+        <ellipse cx="50" cy="24" rx="7.4" ry="19" transform="rotate(330 50 50)"/>
+      </g>
+      <g fill="#ffeeb4" opacity=".5">
+        <ellipse cx="50" cy="31" rx="3.8" ry="10.5"/>
+        <ellipse cx="50" cy="31" rx="3.8" ry="10.5" transform="rotate(60 50 50)"/>
+        <ellipse cx="50" cy="31" rx="3.8" ry="10.5" transform="rotate(120 50 50)"/>
+        <ellipse cx="50" cy="31" rx="3.8" ry="10.5" transform="rotate(180 50 50)"/>
+        <ellipse cx="50" cy="31" rx="3.8" ry="10.5" transform="rotate(240 50 50)"/>
+        <ellipse cx="50" cy="31" rx="3.8" ry="10.5" transform="rotate(300 50 50)"/>
+      </g>
+      <circle cx="50" cy="50" r="15" fill="url(#gSeed)"/>
+      <circle cx="50" cy="50" r="15" fill="none" stroke="#cf9020" stroke-width="1.5" opacity=".65"/>
+      <circle cx="45" cy="45.5" r="1.5" fill="#a26b2c" opacity=".8"/>
+      <circle cx="54" cy="47" r="1.3" fill="#a26b2c" opacity=".7"/>
+      <circle cx="47" cy="55" r="1.2" fill="#a26b2c" opacity=".7"/>
+      <circle cx="56" cy="54" r="1.4" fill="#a26b2c" opacity=".75"/>
+      <circle cx="50" cy="44" r="1.1" fill="#a26b2c" opacity=".65"/>
+    </g>
+  </defs>
+</svg>
+
+<header class="crown">
+  <p class="eyebrow">Para</p>
+  <h1>Sinthya 🌻</h1>
+</header>
+
+<main class="cosmos" id="cosmos">
+  <div class="orbit" id="orbit"></div>
+</main>
+
+<footer class="foot">
+  <p class="hint" id="hint">Arrastra para girar la galaxia · toca una flor para leer</p>
+  <div class="track" id="track"></div>
+  <p class="count" id="count">0 / 8 flores descubiertas</p>
+</footer>
+
+<div class="lovenote" id="lovenote">
+  <p id="lovenoteText"></p>
+  <button class="back" id="lovenoteBack" type="button">Ocultar mensaje</button>
+</div>
+
+<button class="sound" id="soundBtn" type="button" aria-pressed="false" aria-label="Activar sonido ambiental">🔈</button>
+
+<!-- portada -->
+<div class="veil show" id="intro">
+  <div class="prologue">
+    <div class="gate" id="gate">
+      <p class="date">21 · Septiembre</p>
+      <svg class="orb" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"></use></svg>
+      <h2>Sinthya</h2>
+      <p>Toca para comenzar</p>
+      <button class="enter" id="enterBtn" type="button">Comenzar ✨</button>
+    </div>
+
+    <div class="pl-copy" id="plCopy" hidden>
+      <p class="pl-title" id="plTitle"></p>
+      <p class="pl-text" id="plText"></p>
+      <div class="pl-row">
+        <p class="chap"><b id="chapNow">01</b><i></i><span id="chapTotal">04</span></p>
+        <button class="next" id="nextBtn" type="button">Seguir <span>→</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- carta -->
+<div class="veil" id="letters" hidden>
+  <div class="card" id="letterCard">
+    <div class="frame"></div>
+    <div class="seal" id="seal">🌻</div>
+    <p class="no" id="cardNo">Carta N.º 01</p>
+    <h3 id="cardTitle"></h3>
+    <div class="rule"></div>
+    <div class="body" id="cardBody"></div>
+    <p class="sign" id="cardSign"></p>
+    <button class="close" id="closeBtn" type="button">Cerrar</button>
+  </div>
+</div>
+
+<!-- final -->
+<div class="veil" id="finale" hidden>
+  <div class="card">
+    <div class="frame"></div>
+    <div class="bouquet" aria-hidden="true">
+      <svg viewBox="0 0 100 100"><use href="#flower"></use></svg>
+      <svg viewBox="0 0 100 100"><use href="#flower"></use></svg>
+      <svg viewBox="0 0 100 100"><use href="#flower"></use></svg>
+    </div>
+    <p class="no">Última carta</p>
+    <h3>Leíste todas las flores</h3>
+    <div class="rule"></div>
+    <div class="body">
+      <p>Gracias por llegar hasta el final de esta pequeña galaxia. Cada flor tenía un pedacito de cariño para ti, y todas siguen aquí, listas para cuando quieras volver a leerlas.</p>
+    </div>
+    <p class="sign">— con cariño</p>
+    <button class="again" id="againBtn" type="button">Seguir mirando las estrellas</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var body=document.body;
+
+  /* ---------- estrellas ---------- */
+  var sky=document.getElementById('sky');
+  var ctx=sky.getContext('2d');
+  var stars=[];
+  function resize(){
+    var w=innerWidth,h=innerHeight,dpr=Math.min(window.devicePixelRatio||1,2);
+    sky.width=w*dpr;sky.height=h*dpr;
+    sky.style.width=w+'px';sky.style.height=h+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    var n=Math.max(60,Math.round((w*h)/9000));
+    stars=[];
+    for(var i=0;i<n;i++){
+      stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.3+.3,p:Math.random()*Math.PI*2,s:Math.random()*.02+.006});
+    }
+  }
+  function draw(t){
+    var w=innerWidth,h=innerHeight;
+    ctx.clearRect(0,0,w,h);
+    for(var i=0;i<stars.length;i++){
+      var st=stars[i];
+      var a=.3+.7*Math.abs(Math.sin(st.p+t*st.s));
+      ctx.beginPath();
+      ctx.fillStyle='rgba(255,245,226,'+a.toFixed(3)+')';
+      ctx.arc(st.x,st.y,st.r,0,Math.PI*2);
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  addEventListener('resize',resize,{passive:true});
+  resize();
+  requestAnimationFrame(draw);
+
+  /* ---------- sonido ambiental (Web Audio, sin archivos externos) ---------- */
+  var audioCtx=null,audioNodes=null,soundOn=false;
+  var soundBtn=document.getElementById('soundBtn');
+  function startAmbient(){
+    try{
+      audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+      var master=audioCtx.createGain();
+      master.gain.value=0;
+      master.connect(audioCtx.destination);
+      master.gain.linearRampToValueAtTime(.045,audioCtx.currentTime+2);
+      var freqs=[196,246.94,293.66];
+      var oscs=freqs.map(function(f){
+        var o=audioCtx.createOscillator();
+        o.type='sine';
+        o.frequency.value=f;
+        var g=audioCtx.createGain();
+        g.gain.value=1/freqs.length;
+        o.connect(g);g.connect(master);
+        o.start();
+        return o;
+      });
+      var lfo=audioCtx.createOscillator();
+      lfo.frequency.value=.07;
+      var lfoGain=audioCtx.createGain();
+      lfoGain.gain.value=.025;
+      lfo.connect(lfoGain);
+      lfoGain.connect(master.gain);
+      lfo.start();
+      audioNodes={master:master,oscs:oscs,lfo:lfo};
+    }catch(e){audioNodes=null;}
+  }
+  function stopAmbient(){
+    if(!audioNodes||!audioCtx)return;
+    var now=audioCtx.currentTime;
+    audioNodes.master.gain.linearRampToValueAtTime(0,now+.8);
+    var ctxToClose=audioCtx,nodesToStop=audioNodes;
+    setTimeout(function(){
+      try{
+        nodesToStop.oscs.forEach(function(o){o.stop();});
+        nodesToStop.lfo.stop();
+        ctxToClose.close();
+      }catch(e){}
+    },900);
+    audioCtx=null;audioNodes=null;
+  }
+  soundBtn.addEventListener('click',function(){
+    soundOn=!soundOn;
+    soundBtn.textContent=soundOn?'🔊':'🔈';
+    soundBtn.setAttribute('aria-pressed',String(soundOn));
+    if(soundOn){startAmbient();}else{stopAmbient();}
+  });
+
+  /* ---------- portada / prólogo ---------- */
+  var intro=document.getElementById('intro');
+  var gate=document.getElementById('gate');
+  var plCopy=document.getElementById('plCopy');
+  var plTitle=document.getElementById('plTitle');
+  var plText=document.getElementById('plText');
+  var chapNow=document.getElementById('chapNow');
+  var chapTotal=document.getElementById('chapTotal');
+  var nextBtn=document.getElementById('nextBtn');
+  var flash=document.getElementById('flash');
+  var enterBtn=document.getElementById('enterBtn');
+
+  var chapters=[
+    {title:'Sinthya',text:'Hay historias que se cuentan con palabras y otras que se cuentan con luz. Esta es una pequeña galaxia, hecha solo para ti.'},
+    {title:'Cada estrella',text:'Cada punto de luz que ves aquí guarda algo que quería decirte y no siempre encontré el momento justo para hacerlo.'},
+    {title:'Una flor a la vez',text:'Ocho flores te esperan flotando en la oscuridad. Tócalas, una por una, cuando tengas ganas de leer algo bonito.'},
+    {title:'Lista',text:'No hay ninguna prisa. Puedes volver aquí las veces que quieras, hoy, mañana o cuando lo necesites.'}
+  ];
+  var chapIndex=0;
+  chapTotal.textContent=String(chapters.length).padStart(2,'0');
+
+  function pad2(n){return String(n).padStart(2,'0');}
+
+  function renderChapter(){
+    var c=chapters[chapIndex];
+    plTitle.textContent=c.title;
+    plText.textContent=c.text;
+    chapNow.textContent=pad2(chapIndex+1);
+    var last=chapIndex===chapters.length-1;
+    nextBtn.innerHTML=last?'Entrar a tu galaxia <span>→</span>':'Seguir <span>→</span>';
+    nextBtn.classList.toggle('gold',last);
+  }
+
+  function goNext(){
+    if(chapIndex<chapters.length-1){
+      plCopy.classList.add('swap');
+      setTimeout(function(){
+        chapIndex++;
+        renderChapter();
+        plCopy.classList.remove('swap');
+      },260);
+    }else{
+      openGalaxy();
+    }
+  }
+  nextBtn.addEventListener('click',goNext);
+
+  enterBtn.addEventListener('click',function(){
+    flash.classList.add('go');
+    body.classList.add('awakened');
+    setTimeout(function(){
+      flash.classList.remove('go');
+      gate.hidden=true;
+      plCopy.hidden=false;
+      renderChapter();
+    },550);
+  });
+
+  function openGalaxy(){
+    intro.classList.add('hide');
+    body.classList.add('entered');
+    setTimeout(function(){intro.hidden=true;},450);
+    setTimeout(function(){body.classList.add('bloomed');},300);
+    setTimeout(function(){loveNoteCycle();},2200);
+  }
+
+  /* ---------- cosmos de flores ---------- */
+  var cosmos=document.getElementById('cosmos');
+  var orbit=document.getElementById('orbit');
+  var track=document.getElementById('track');
+  var countEl=document.getElementById('count');
+  var hint=document.getElementById('hint');
+
+  var notes=[
+    {title:'La primera vez',body:['Hubo un momento en que todo lo demás se quedó en silencio y solo quedaste tú.','Desde entonces no he dejado de notarlo.']},
+    {title:'Tu risa',body:['Hay sonidos que uno guarda sin pedir permiso.','El tuyo es uno de los pocos que recuerdo exacto, incluso en un día cualquiera.']},
+    {title:'Los días grises',body:['En los días difíciles pienso en cosas simples para sentirme mejor.','Tú eres una de ellas, casi siempre la primera.']},
+    {title:'Pequeños detalles',body:['No hacen falta gestos enormes.','Un mensaje a tiempo, una risa compartida, un "cómo estás" a veces alcanza para alegrarme el día entero.']},
+    {title:'Lo que no te digo',body:['Hay cosas que pienso y no siempre digo, por costumbre o por timidez.','Esta pequeña galaxia es mi forma de decir algunas, aunque sea con estrellas de por medio.']},
+    {title:'Girasol',body:['Dicen que el girasol siempre busca la luz, sin importar hacia dónde se mueva el día.','Contigo me pasa algo parecido.']},
+    {title:'Gracias',body:['Gracias por estar, por escuchar, por seguir aquí incluso en los días donde no tengo mucho que ofrecer.','Eso también se agradece, y mucho.']},
+    {title:'Hoy y siempre',body:['Quería que tuvieras un lugar solo tuyo, aunque sea pequeño, aunque sea de código y estrellas.','Vuelve cuando quieras. Esto va a seguir aquí, para ti.']}
+  ];
+
+  var read=new Array(notes.length).fill(false);
+  countEl.textContent='0 / '+notes.length+' flores descubiertas';
+  for(var d=0;d<notes.length;d++){
+    track.appendChild(document.createElement('i'));
+  }
+
+  function fibonacciSphere(n,radius){
+    var pts=[];
+    var off=2/n;
+    var inc=Math.PI*(3-Math.sqrt(5));
+    for(var i=0;i<n;i++){
+      var y=((i*off)-1)+(off/2);
+      var r=Math.sqrt(Math.max(0,1-y*y));
+      var phi=i*inc;
+      pts.push({x:Math.cos(phi)*r*radius,y:y*radius,z:Math.sin(phi)*r*radius});
+    }
+    return pts;
+  }
+
+  var radius=Math.min(150,Math.max(100,Math.min(innerWidth,innerHeight)*.34));
+  var pts=fibonacciSphere(notes.length,radius);
+  var blooms=[];
+
+  notes.forEach(function(note,i){
+    var btn=document.createElement('button');
+    btn.className='bloom';
+    btn.type='button';
+    btn.style.setProperty('--s','72px');
+    btn.style.setProperty('--tone',(i*27)+'deg');
+    btn.style.transform='translate3d('+pts[i].x.toFixed(1)+'px,'+pts[i].y.toFixed(1)+'px,'+pts[i].z.toFixed(1)+'px)';
+    btn.setAttribute('aria-label','Abrir carta: '+note.title);
+    btn.innerHTML='<span class="halo"></span><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"></use></svg><span class="tick">✓</span>';
+    btn.addEventListener('click',(function(idx){return function(){openLetter(idx);};})(i));
+    orbit.appendChild(btn);
+    blooms.push(btn);
+  });
+
+  /* rotación por arrastre + autorotación suave */
+  var rotX=-8,rotY=0,dragging=false,lastX=0,lastY=0,autoSpin=true,resumeTimer=null;
+  function applyRotation(){
+    orbit.style.transform='rotateX('+rotX+'deg) rotateY('+rotY+'deg)';
+  }
+  applyRotation();
+
+  cosmos.addEventListener('pointerdown',function(e){
+    dragging=true;autoSpin=false;
+    clearTimeout(resumeTimer);
+    lastX=e.clientX;lastY=e.clientY;
+    cosmos.classList.add('grabbing');
+    cosmos.setPointerCapture(e.pointerId);
+  });
+  cosmos.addEventListener('pointermove',function(e){
+    if(!dragging)return;
+    var dx=e.clientX-lastX,dy=e.clientY-lastY;
+    lastX=e.clientX;lastY=e.clientY;
+    rotY+=dx*.35;
+    rotX=Math.max(-60,Math.min(60,rotX-dy*.35));
+    applyRotation();
+  });
+  function endDrag(){
+    if(!dragging)return;
+    dragging=false;
+    cosmos.classList.remove('grabbing');
+    resumeTimer=setTimeout(function(){autoSpin=true;},2600);
+  }
+  cosmos.addEventListener('pointerup',endDrag);
+  cosmos.addEventListener('pointercancel',endDrag);
+  cosmos.addEventListener('pointerleave',endDrag);
+
+  var reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  (function spin(){
+    if(autoSpin&&!document.hidden&&!reduceMotion){
+      rotY+=.045;
+      applyRotation();
+    }
+    requestAnimationFrame(spin);
+  })();
+
+  /* ---------- cartas ---------- */
+  var veil=document.getElementById('letters');
+  var card=document.getElementById('letterCard');
+  var seal=document.getElementById('seal');
+  var noEl=document.getElementById('cardNo');
+  var titleEl=document.getElementById('cardTitle');
+  var bodyEl=document.getElementById('cardBody');
+  var signEl=document.getElementById('cardSign');
+  var closeBtn=document.getElementById('closeBtn');
+  var entrances=['e0','e1','e2','e3','e4','e5'];
+  var revealTimer=null;
+
+  function openLetter(i){
+    var note=notes[i];
+    card.className='card '+entrances[i%entrances.length];
+    noEl.textContent='Carta N.º '+pad2(i+1);
+    titleEl.textContent=note.title;
+    signEl.textContent='— con cariño';
+    bodyEl.innerHTML=note.body.map(function(p){
+      return '<p>'+p.split(' ').map(function(w){return '<span class="w">'+w+'</span>';}).join(' ')+'</p>';
+    }).join('');
+    veil.hidden=false;
+    requestAnimationFrame(function(){veil.classList.add('show');});
+    var words=bodyEl.querySelectorAll('.w');
+    var k=0;
+    clearInterval(revealTimer);
+    revealTimer=setInterval(function(){
+      if(k>=words.length){clearInterval(revealTimer);return;}
+      words[k].classList.add('on');
+      k++;
+    },38);
+
+    if(!read[i]){
+      read[i]=true;
+      blooms[i].classList.add('read');
+      track.children[i].classList.add('on');
+      var doneCount=read.filter(Boolean).length;
+      countEl.textContent=doneCount+' / '+notes.length+' flores descubiertas';
+      if(hint&&!hint.classList.contains('gone'))hint.classList.add('gone');
+      if(doneCount===notes.length){
+        setTimeout(showFinale,1400);
+      }
+    }
+  }
+
+  function closeLetter(){
+    veil.classList.remove('show');
+    clearInterval(revealTimer);
+    setTimeout(function(){veil.hidden=true;},400);
+  }
+  closeBtn.addEventListener('click',closeLetter);
+  veil.addEventListener('click',function(e){if(e.target===veil)closeLetter();});
+
+  /* ---------- final ---------- */
+  var finale=document.getElementById('finale');
+  var againBtn=document.getElementById('againBtn');
+  function showFinale(){
+    finale.hidden=false;
+    requestAnimationFrame(function(){finale.classList.add('show');});
+  }
+  function hideFinale(){
+    finale.classList.remove('show');
+    setTimeout(function(){finale.hidden=true;},400);
+  }
+  againBtn.addEventListener('click',hideFinale);
+  finale.addEventListener('click',function(e){if(e.target===finale)hideFinale();});
+
+  /* ---------- mensaje flotante ---------- */
+  var lovenote=document.getElementById('lovenote');
+  var lovenoteText=document.getElementById('lovenoteText');
+  var lovenoteBack=document.getElementById('lovenoteBack');
+  var phrases=[
+    'Gracias por llegar hasta aquí. 🌻',
+    'Puedes volver a mirar las estrellas cuando quieras.',
+    'Cada flor sigue aquí, esperando que la leas otra vez.',
+    'Esto va a seguir aquí para ti, hoy y después.'
+  ];
+  var phraseIndex=0,loveTimer=null,loveStarted=false;
+  function loveNoteCycle(){
+    if(loveStarted)return;
+    loveStarted=true;
+    lovenoteText.textContent=phrases[0];
+    lovenote.classList.add('show');
+    loveTimer=setInterval(function(){
+      lovenoteText.classList.add('swap');
+      setTimeout(function(){
+        phraseIndex=(phraseIndex+1)%phrases.length;
+        lovenoteText.textContent=phrases[phraseIndex];
+        lovenoteText.classList.remove('swap');
+      },380);
+    },7000);
+  }
+  lovenoteBack.addEventListener('click',function(){
+    var showing=lovenote.classList.toggle('show');
+    lovenoteBack.textContent=showing?'Ocultar mensaje':'Mostrar mensaje';
+  });
+
+})();
+</script>
+</body>
+</html>
